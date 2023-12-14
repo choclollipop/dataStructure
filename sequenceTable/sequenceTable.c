@@ -1,6 +1,8 @@
 #include "sequenceTable.h"
 #include <stdlib.h>
 
+#define DEFAULT_SIZE 10
+
 typedef enum STATUS
 {
     NO_LOCATE = -5,
@@ -11,86 +13,86 @@ typedef enum STATUS
     ON_SUCCESS,
 }STATUS;
 
-int InitList(seqList *L, int num)
+int InitList(seqList *pList)
 {
-    L->data = (ElenType *)malloc(sizeof(ElenType) * num);
-    if(!L->data)
+    pList->data = (ElenType *)malloc(sizeof(ElenType) * DEFAULT_SIZE);
+    if(!pList->data)
     {
         return ON_ERROR;
     }
 
-    L->lenth = 0;
-    L->MAX_SIZE = num;
+    pList->lenth = 0;
+    pList->MAX_SIZE = DEFAULT_SIZE;
 
     return ON_SUCCESS;
 }
 
-int InsertList(seqList * L, const int site, const int num)
+int InsertList(seqList * pList, const int site, const int num)
 {
     /* 判断插入位置是否合法 */
-    if((site < 1) || (site > L->lenth + 1))
+    if((site < 1) || (site > pList->lenth + 1))
     {
         return ON_ILLEGAL;
     }
 
     /* 判断表是不是满的 */
-    if(L->lenth >= L->MAX_SIZE)
+    if(pList->lenth >= pList->MAX_SIZE)
     {
         return ON_FULL;
     }
 
     /* 插入数据 */
-    for(int idx = L->lenth - 1; idx >= site - 1; idx--)
+    for(int idx = pList->lenth - 1; idx >= site - 1; idx--)
     {
-        L->data[idx + 1] = L->data[idx];
+        pList->data[idx + 1] = pList->data[idx];
     }
 
-    L->data[site - 1] = num;
-    L->lenth++;
+    pList->data[site - 1] = num;
+    pList->lenth++;
 
     return ON_SUCCESS;
 }
 
-int delateList(seqList *L, const int site, int *num)
+int delateList(seqList *pList, const int site, int *num)
 {
     /* 判断输入是否合法 */
-    if((site > L->lenth) || (site < 1))
+    if((site > pList->lenth) || (site < 1))
     {
         return ON_ILLEGAL;
     }
 
-    if(L->lenth == 0)
+    if(pList->lenth == 0)
     {
         return ON_EMPTY;
     }
 
     /* 删除指定位置的值 */
-    *num = L->data[site - 1];
-    for(int idx = site; idx < L->lenth; idx++)
+    *num = pList->data[site - 1];
+    for(int idx = site; idx < pList->lenth; idx++)
     {
-        L->data[idx - 1] = L->data[idx];
+        pList->data[idx - 1] = pList->data[idx];
     }
 
-    L->lenth--;
+    pList->lenth--;
 
     return ON_SUCCESS;
 }
 
-int orderSearch(seqList *L, const int site)
+int orderSearch(seqList *pList, const int site)
 {
-    if((site < 1) || (site > L->lenth))
+    if((site < 1) || (site > pList->lenth))
     {
         return ON_ILLEGAL;
     }
 
-    return L->data[site - 1];
+    return pList->data[site - 1];
 }
 
-int locateList(seqList *L, const int num)
+int locateList(seqList *pList, const int num)
 {
-    for(int idx = 0; idx < L->lenth; idx++)
+    for(int idx = 0; idx < pList->lenth; idx++)
     {
-        if(L->data[idx] == num)
+        if(pList->data[idx] == num)
         {
             return idx + 1;
         }
@@ -99,18 +101,18 @@ int locateList(seqList *L, const int num)
     return NO_LOCATE;
 }
 
-int increaseList(seqList *L, const int len)
+int increaseList(seqList *pList, const int len)
 {
-    int * ptr = L->data;
+    int * ptr = pList->data;
 
     /* 为表重新申请一个空间 */
-    L->data = (ElenType *)malloc(sizeof(ElenType) * (L->MAX_SIZE + len));
-    for(int idx = 0; idx < L->lenth; idx++)
+    pList->data = (ElenType *)malloc(sizeof(ElenType) * (pList->MAX_SIZE + len));
+    for(int idx = 0; idx < pList->lenth; idx++)
     {
-        L->data[idx] = ptr[idx];
+        pList->data[idx] = ptr[idx];
     }
 
-    L->MAX_SIZE = L->MAX_SIZE + len;
+    pList->MAX_SIZE = pList->MAX_SIZE + len;
     free(ptr);
 
     return ON_SUCCESS;

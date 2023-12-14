@@ -11,21 +11,21 @@ typedef struct seqList
 } seqList;
 
 /* 初始化顺序表 */
-int InitList(seqList * L, int size);
+int InitList(seqList * pList);
 
 /* 顺序表的插入 */
-int InsertList(seqList * L, const int site, const int num);
+int InsertList(seqList * pList, const int site, const int num);
 
 /* 顺序表的删除 */
-int delateList(seqList * L, const int site, int *num);
+int delateList(seqList * pList, const int site, int *num);
 
 /* 按序查找 */
-int orderSearch(seqList * L, const int site);
+int orderSearch(seqList * pList, const int site);
 
 /* 按值查找 */
-int locateList(seqList * L, const int num);
+int locateList(seqList * pList, const int num);
 
 /* 增加表的长度 */
-int increaseList(seqList * L,const int len);
+int increaseList(seqList * pList,const int len);
 
 #endif //__SEQUENCE_TABLE_H_
