@@ -8,7 +8,7 @@ int main()
 {
     seqList List;
    
-    InitList(&List, BUF_LIST);
+    InitList(&List);
 
 #if 1
 
