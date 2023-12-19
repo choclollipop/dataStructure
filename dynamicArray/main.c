@@ -43,6 +43,17 @@ int main()
         printf("array.data[%d] : %d\n", idx, *(int *)array.data[idx]);
     }
     
+    /* 测试获取动态数组大小 */
+    int len = 0;
+    dynamicArrayGetSize(&array, &len);
+    printf("dynamicArray len : %d\n", len);
+
+    /* 测试获取动态数组的容量 */
+    int capacity = 0;
+    dynamicArrayGetCapacity(&array, &capacity);
+    printf("dynamicArray capacity : %d\n", capacity);
+
+
     printf("len : %d\n", array.len);
     printf("capacity: %d\n", array.capacity);
 

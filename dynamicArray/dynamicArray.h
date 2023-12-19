@@ -34,4 +34,13 @@ int dynamicArraySearch(dynamicArray * pArray, int pos, ELEMENTYP *val);
 /* 修改动态数组指定位置的数值 */
 int dynamicArrayModifyAppiontPosVal(dynamicArray * pArray, ELEMENTYP val, int pos);
 
+/* 动态数组的销毁 */
+int dynamicArrayDestroy(dynamicArray * pArray);
+
+/* 获取数组的大小 */
+int dynamicArrayGetSize(dynamicArray * pArray, int *pSize);
+
+/* 获取数组的容量 */
+int dynamicArrayGetCapacity(dynamicArray * pArray, int *pCapacity);
+
 #endif  //__DYNAMIC_ARRAY_H_

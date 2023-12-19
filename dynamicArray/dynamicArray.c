@@ -218,3 +218,30 @@ int dynamicArrayModifyAppiontPosVal(dynamicArray * pArray, ELEMENTYP val, int po
 
     return ON_SUCCESS;
 }
+
+/* 获取数组的大小 */
+int dynamicArrayGetSize(dynamicArray * pArray, int *pSize)
+{
+    CHECK_PTR(pArray);
+
+    if(pSize)
+    {
+        *pSize = pArray->len;
+    }
+    
+    return ON_SUCCESS;
+}
+
+/* 获取数组的容量 */
+int dynamicArrayGetCapacity(dynamicArray * pArray, int *pCapacity)
+{
+    CHECK_PTR(pArray);
+
+    if(pCapacity)
+    {
+        *pCapacity = pArray->capacity;
+    }
+
+    return ON_SUCCESS;
+}
+
