@@ -5,7 +5,7 @@
 
 typedef struct dynamicArray
 {
-    ELEMENTYP data;
+    ELEMENTYP *data;
     int len;
     int capacity;
 }dynamicArray;
