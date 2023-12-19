@@ -203,3 +203,18 @@ int dynamicArraySearch(dynamicArray * pArray, int pos, ELEMENTYP *val)
 
     return ON_SUCCESS;
 }
+
+/* 修改动态数组指定位置的数值 */
+int dynamicArrayModifyAppiontPosVal(dynamicArray * pArray, ELEMENTYP val, int pos)
+{
+    CHECK_PTR(pArray);
+
+    if(pos < 0 || pos > pArray->len)
+    {
+        return ILLEGAL_DATA;
+    }
+
+    pArray->data[pos] = val;
+
+    return ON_SUCCESS;
+}

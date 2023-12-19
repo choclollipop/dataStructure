@@ -35,6 +35,9 @@ int main()
     dynamicArraySearch(&array, 2, (void *)&val);
     printf("pos = 2 ,val = %d\n", *val);
 
+    /* 修改指定位置的元素 */
+    dynamicArrayModifyAppiontPosVal(&array, &test[0], 1);
+
     for(int idx = 0; idx < array.len; idx++)
     {
         printf("array.data[%d] : %d\n", idx, *(int *)array.data[idx]);
