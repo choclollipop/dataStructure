@@ -11,7 +11,7 @@ typedef struct dynamicArray
 }dynamicArray;
 
 /* 动态数组初始化 */
-int dynamicArrayInit(dynamicArray * pArray);
+int dynamicArrayInit(dynamicArray * pArray, int capacity);
 
 /* 动态数组的插入操作（默认插入位置末尾） */
 int dynamicArrayInsert(dynamicArray * pArray, ELEMENTYP val);
