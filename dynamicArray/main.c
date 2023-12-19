@@ -27,22 +27,29 @@ int main()
     /* 测试删除指定位置数据 */
     dynamicArrayDeleteAppointPosData(&array, 2);
 
-    /* 删除指定元素 */
-    /* 重新测试 */
-    // dynamicArrayDeleteAppointVal(&array, 1);
+    for(int idx = 0; idx < array.len; idx++)
+    {
+        printf("array.data[%d] : %d\n", idx, *(int *)array.data[idx]);
+    }
 
+    /* 删除指定元素 */
+    dynamicArrayDeleteAppointVal(&array, 1);
+
+#if 0
     /* 测试查找指定位置的元素 */
     dynamicArraySearch(&array, 2, (void *)&val);
     printf("pos = 2 ,val = %d\n", *val);
 
     /* 修改指定位置的元素 */
     dynamicArrayModifyAppiontPosVal(&array, &test[0], 1);
+#endif
 
     for(int idx = 0; idx < array.len; idx++)
     {
         printf("array.data[%d] : %d\n", idx, *(int *)array.data[idx]);
     }
-    
+
+#if 0 
     /* 测试获取动态数组大小 */
     int len = 0;
     dynamicArrayGetSize(&array, &len);
@@ -54,8 +61,9 @@ int main()
     printf("dynamicArray capacity : %d\n", capacity);
 
     /* 测试销毁数组 */
-    dynamicArrayDestroy(&array);
-    printf("array.data[0]: %d\n", *(int *)array.data[0]);
+    // dynamicArrayDestroy(&array);
+    // printf("array.data[0]: %d\n", *(int *)array.data[0]);
+#endif
 
     printf("len : %d\n", array.len);
     printf("capacity: %d\n", array.capacity);

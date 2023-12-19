@@ -179,7 +179,6 @@ int dynamicArrayDeleteAppointVal(dynamicArray * pArray, int val)
         if(*(int *)pArray->data[idx] == val)
         {
             dynamicArrayDeleteAppointPosData(pArray, idx);
-            pArray->len--;
         }
     }
 
