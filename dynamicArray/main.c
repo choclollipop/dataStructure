@@ -7,6 +7,7 @@ int main()
 {
     dynamicArray array;
     int test[] = {1, 2, 3, 4, 5, 6};
+    int * val = NULL;
 
     /* 测试初始化函数 */
     dynamicArrayInit(&array, DEFAULT_SIZE);
@@ -25,6 +26,14 @@ int main()
 
     /* 测试删除指定位置数据 */
     dynamicArrayDeleteAppointPosData(&array, 2);
+
+    /* 删除指定元素 */
+    /* 重新测试 */
+    // dynamicArrayDeleteAppointVal(&array, 1);
+
+    /* 测试查找指定位置的元素 */
+    dynamicArraySearch(&array, 2, (void *)&val);
+    printf("pos = 2 ,val = %d\n", *val);
 
     for(int idx = 0; idx < array.len; idx++)
     {

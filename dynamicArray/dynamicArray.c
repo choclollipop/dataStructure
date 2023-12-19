@@ -168,3 +168,38 @@ int dynamicArrayDeleteAppointPosData(dynamicArray * pArray, int pos)
 
     return ON_SUCCESS;
 }
+
+/* 删除指定元素 */
+int dynamicArrayDeleteAppointVal(dynamicArray * pArray, int val)
+{
+    CHECK_PTR(pArray);
+
+    for(int idx = pArray->len - 1; idx >= 0; idx--)
+    {
+        if(*(int *)pArray->data[idx] == val)
+        {
+            dynamicArrayDeleteAppointPosData(pArray, idx);
+            pArray->len--;
+        }
+    }
+
+    return ON_SUCCESS;
+}
+
+/* 动态数组的查询指定位置的数值操作 */
+int dynamicArraySearch(dynamicArray * pArray, int pos, ELEMENTYP *val)
+{
+    CHECK_PTR(pArray);
+
+    if(pos < 0 || pos > pArray->len)
+    {
+        return ILLEGAL_DATA;
+    }
+
+    if(val)
+    {
+        *val = pArray->data[pos];
+    }
+
+    return ON_SUCCESS;
+}
