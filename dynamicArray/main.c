@@ -53,6 +53,9 @@ int main()
     dynamicArrayGetCapacity(&array, &capacity);
     printf("dynamicArray capacity : %d\n", capacity);
 
+    /* 测试销毁数组 */
+    dynamicArrayDestroy(&array);
+    printf("array.data[0]: %d\n", *(int *)array.data[0]);
 
     printf("len : %d\n", array.len);
     printf("capacity: %d\n", array.capacity);

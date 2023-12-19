@@ -245,3 +245,13 @@ int dynamicArrayGetCapacity(dynamicArray * pArray, int *pCapacity)
     return ON_SUCCESS;
 }
 
+/* 动态数组的销毁 */
+int dynamicArrayDestroy(dynamicArray * pArray)
+{
+    CHECK_PTR(pArray);
+
+    free(pArray->data);
+    pArray->data = NULL;
+
+    return ON_SUCCESS;
+}
