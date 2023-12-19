@@ -31,6 +31,7 @@ do{                              \
 
 /* 前置声明 */
 static int dynamicArrayExpand(dynamicArray * pArray);
+static int dynamicArrayReduce(dynamicArray * pArray);
 
 int dynamicArrayInit(dynamicArray * pArray, int capacity)
 {
@@ -117,3 +118,53 @@ int dynamicArrayInsertAppointPosData(dynamicArray * pArray, ELEMENTYP val, int p
     return ON_SUCCESS;
 }
 
+/* 动态缩容 */
+static int dynamicArrayReduce(dynamicArray * pArray)
+{
+    ELEMENTYP * pTmp = pArray->data;
+
+    int redecuCapacity = pArray->capacity - (pArray->capacity >> 2);
+
+    pArray->data = (ELEMENTYP *)malloc(sizeof(ELEMENTYP) * redecuCapacity);
+    CHECK_MALLOC(pArray->data);
+
+    for(int idx = 0; idx < pArray->len; idx++)
+    {
+        pArray->data[idx] = pTmp[idx];
+    }
+
+    pArray->capacity = redecuCapacity;
+
+    return ON_SUCCESS;
+}
+
+/* 动态数组的删除操作(默认删除末尾元素) */
+int dynamicArrayDelete(dynamicArray * pArray)
+{
+    return dynamicArrayDeleteAppointPosData(pArray, pArray->len - 1);
+}
+
+/* 动态数组删除指定位置数据 */
+int dynamicArrayDeleteAppointPosData(dynamicArray * pArray, int pos)
+{
+    CHECK_PTR(pArray);
+
+    if(pos < 0 || pos > pArray->len - 1)
+    {
+        return ILLEGAL_DATA;
+    }
+
+    /* 判断是否缩容 */
+    if(pArray->capacity - (pArray->capacity >> 2) > pArray->len)
+    {
+        dynamicArrayReduce(pArray);
+    }
+    for(int idx = pos; idx < pArray->len; idx++)
+    {
+        pArray->data[idx] = pArray->data[idx + 1];
+    }
+
+    pArray->len--;
+
+    return ON_SUCCESS;
+}

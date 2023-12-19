@@ -22,11 +22,14 @@ int dynamicArrayInsertAppointPosData(dynamicArray * pArray, ELEMENTYP val, int p
 /* 动态数组的删除操作(默认删除末尾元素) */
 int dynamicArrayDelete(dynamicArray * pArray);
 
-/* 动态数组指定位置删除数据 */
+/* 动态数组删除指定位置数据 */
 int dynamicArrayDeleteAppointPosData(dynamicArray * pArray, int pos);
 
+/* 删除指定元素 */
+int dynamicArrayDeleteAppointVal(dynamicArray * pArray, ELEMENTYP val);
+
 /* 动态数组的查询指定位置的数值操作 */
-int dynamicArraySearch(dynamicArray * pArray, int pos, ELEMENTYP *val);
+int dynamicArraySearch(dynamicArray * pArray, int pos, ELEMENTYP val);
 
 /* 修改动态数组指定位置的数值 */
 int dynamicArrayModifyAppiontPosVal(dynamicArray * pArray, ELEMENTYP val, int pos);
