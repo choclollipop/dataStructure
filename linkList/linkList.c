@@ -5,7 +5,7 @@
 enum STATUS_CODE
 {
     ON_SUCCESS,
-    NULL_PTR,
+    NULL_PTR = -5,
     MALLOC_ERROR,
     ILLEGAL_DATA,
 };
@@ -117,7 +117,61 @@ int linkListAppointPosInsert(linkList * pList, int pos, ELEMENTTYPE val)
     return ON_SUCCESS;
 }
 
+/* 头删 */
+int linkListDelHead(linkList * pList)
+{
+    return linkListDeleteAppointPosVal(pList, 1);
+}
 
+/* 尾删 */
+int linkListDelTail(linkList * pList)
+{
+    return linkListDeleteAppointPosVal(pList, pList->len);
+}
+
+/* 删除指定位置元素 */
+int linkListDeleteAppointPosVal(linkList * pList, int pos)
+{
+    CHECK_PTR(pList);
+
+    if(pos <= 0 || pos > pList->len)
+    {
+        return ILLEGAL_DATA;
+    }
+
+    int flag = 0;
+    if(pos == pList->len)
+    {
+        flag = 1;
+    }
+
+    /* 从头结点开始遍历 */
+    Node * travelNode = pList->head;
+     
+    while(--pos)
+    {
+        travelNode = travelNode->next;
+    }
+    /* 删除结点 */
+    Node * needDelNode = travelNode->next;
+    travelNode->next = needDelNode->next;
+
+    if(flag)
+    {
+        pList->tail = travelNode;
+    }
+    
+    if(needDelNode)
+    {
+        free(needDelNode);
+        needDelNode = NULL;
+    }
+
+    /* 更新链表信息 */
+    pList->len--;
+
+    return ON_SUCCESS;
+}
 
 
 

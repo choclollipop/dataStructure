@@ -31,6 +31,15 @@ int main()
     /* 测试指定位置插入 */
     linkListAppointPosInsert(list, 2, (void *)&buffer[2]);
 
+    /* 测试头删 */
+    linkListDelHead(list);
+
+    /* 测试尾删 */
+    linkListDelTail(list);
+
+    /* 测试删除指定位置元素 */
+    linkListDeleteAppointPosVal(list, 2);
+
     /* 测试链表遍历 */
     linkListSearch(list, myPrint);
 

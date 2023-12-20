@@ -29,11 +29,14 @@ int linkListTailInsert(linkList * pList, ELEMENTTYPE val);
 /* 指定位置插入 */
 int linkListAppointPosInsert(linkList * pList, int pos, ELEMENTTYPE val);
 
-/* 删除元素（默认删除表尾元素） */
-int linkListDeleteVal();
+/* 头删 */
+int linkListDelHead(linkList * pList);
+
+/* 尾删 */
+int linkListDelTail(linkList * pList);
 
 /* 删除指定位置元素 */
-int linkListDeleteAppointPosVal();
+int linkListDeleteAppointPosVal(linkList * pList, int pos);
 
 /* 修改链表指定位置数据 */
 int linkListModifyAppointPosVal();
