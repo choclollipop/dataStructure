@@ -38,6 +38,9 @@ int linkListDelTail(linkList * pList);
 /* 删除指定位置元素 */
 int linkListDeleteAppointPosVal(linkList * pList, int pos);
 
+/* 删除指定元素*/
+int linkListDelAppointVal();    //todo......
+
 /* 修改链表指定位置数据 */
 int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val);
 
@@ -49,5 +52,8 @@ int linkListGetVal(linkList * pList, int pos, ELEMENTTYPE *val);
 
 /* 遍历链表 */
 int linkListSearch(linkList * pList, int(* printFunc)(ELEMENTTYPE));
+
+/* 销毁链表 */
+int linkListDestroy(linkList * pList);
 
 #endif //__LINKLIST_H_

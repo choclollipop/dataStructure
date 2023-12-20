@@ -251,9 +251,6 @@ int linkListGetVal(linkList * pList, int pos, ELEMENTTYPE *val)
     return ON_SUCCESS;
 }
 
-
-
-
 /* 遍历链表 */
 int linkListSearch(linkList * pList, int(* printFunc)(ELEMENTTYPE))
 {
@@ -267,6 +264,26 @@ int linkListSearch(linkList * pList, int(* printFunc)(ELEMENTTYPE))
         traveNode = traveNode->next;
         /* 回调函数 */
         printFunc(traveNode->data);
+    }
+
+    return ON_SUCCESS;
+}
+
+/* 销毁链表 */
+int linkListDestroy(linkList * pList)
+{
+    int len = 0;
+    while(linkListGetLen(pList, &len))
+    {
+        linkListDelHead(pList);
+    }
+
+    /* 删除头结点，并将头尾指针置空 */
+    if(pList->head)
+    {
+        free(pList->head);
+        pList->head = NULL;
+        pList->tail = NULL;
     }
 
     return ON_SUCCESS;
