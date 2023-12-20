@@ -1,15 +1,18 @@
 #ifndef __LINK_LIST_H_
 #define __LINK_LIST_H_
 
+#define ELEMENTTYPE void*
+
 typedef struct Node
 {
     ELEMENTTYPE data;
-    struct node * next;
+    struct Node * next;
 }Node;
 
 typedef struct LinkList
 {
     Node * head;   //头指针
+    Node * tail;   //尾指针
     int len;
 }linkList;
 
@@ -18,13 +21,13 @@ typedef struct LinkList
 int linkListInit(linkList ** pLinkList);
 
 /* 头插 */
-int linkListHeadInsert();
+int linkListHeadInsert(linkList * pList, ELEMENTTYPE val);
 
 /* 尾插 */
-int linkListTailInsert();
+int linkListTailInsert(linkList * pList, ELEMENTTYPE val);
 
 /* 指定位置插入 */
-int linkListAppointPosInsert();
+int linkListAppointPosInsert(linkList * pList, int pos, ELEMENTTYPE val);
 
 /* 删除元素（默认删除表尾元素） */
 int linkListDeleteVal();
@@ -40,5 +43,8 @@ int linkListGetLen();
 
 /* 查询链表指定位置的元素 */
 int linkListGetVal();
+
+/* 遍历链表 */
+int linkListSearch(linkList * pList, int(* printFunc)(ELEMENTTYPE));
 
 #endif //__LINKLIST_H_
