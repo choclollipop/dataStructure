@@ -39,7 +39,7 @@ int linkListDelTail(linkList * pList);
 int linkListDeleteAppointPosVal(linkList * pList, int pos);
 
 /* 修改链表指定位置数据 */
-int linkListModifyAppointPosVal();
+int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val);
 
 /* 获取链表大小 */
 int linkListGetLen();

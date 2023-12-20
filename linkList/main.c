@@ -40,6 +40,9 @@ int main()
     /* 测试删除指定位置元素 */
     linkListDeleteAppointPosVal(list, 2);
 
+    /* 测试修改指定位置的元素值 */
+    linkListModifyAppointPosVal(list, 2, (void *)&val);
+
     /* 测试链表遍历 */
     linkListSearch(list, myPrint);
 

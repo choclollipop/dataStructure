@@ -173,6 +173,41 @@ int linkListDeleteAppointPosVal(linkList * pList, int pos)
     return ON_SUCCESS;
 }
 
+/* 修改链表指定位置数据 */
+int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val)
+{
+    CHECK_PTR(pList);
+
+    if(pos <= 0 || pos >pList->len)
+    {
+        return ILLEGAL_DATA;
+    }
+
+    /* 从头结点遍历 */
+    Node * travelNode = pList->head;
+
+    /* 修改位置是表尾 */
+    int flag = 0;
+    if(pos == pList->len)
+    {
+        travelNode = pList->tail;
+        flag = 1;
+    }
+    else
+    {
+        while(pos--)
+        {
+            travelNode = travelNode->next;
+        }
+    }
+
+    travelNode->data = val;
+
+    return ON_SUCCESS;
+}
+
+
+
 
 
 /* 遍历链表 */
