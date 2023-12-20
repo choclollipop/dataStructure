@@ -3,6 +3,19 @@
 
 #define DEFAULT_SIZE 10
 
+int compare(void * val1, void * val2)
+{
+    int ret = 0;
+    int * tmp1 = (int *)val1;
+    int * tmp2 = (int *)val2;
+    if(*tmp1 == *tmp2)
+    {
+        return 1;
+    }
+    
+    return 0;
+}
+
 int main()
 {
     dynamicArray array;
@@ -31,9 +44,11 @@ int main()
     {
         printf("array.data[%d] : %d\n", idx, *(int *)array.data[idx]);
     }
+    printf("\n");
 
     /* 删除指定元素 */
-    dynamicArrayDeleteAppointVal(&array, 1);
+    int a = 1;
+    dynamicArrayDeleteAppointVal(&array, &a, compare);
 
 #if 0
     /* 测试查找指定位置的元素 */

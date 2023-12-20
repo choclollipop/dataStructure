@@ -26,7 +26,7 @@ int dynamicArrayDelete(dynamicArray * pArray);
 int dynamicArrayDeleteAppointPosData(dynamicArray * pArray, int pos);
 
 /* 删除指定元素 */
-int dynamicArrayDeleteAppointVal(dynamicArray * pArray, int val);
+int dynamicArrayDeleteAppointVal(dynamicArray * pArray, ELEMENTYP val, int (* compareFunc)(ELEMENTYP val1, ELEMENTYP val2));
 
 /* 动态数组的查询指定位置的数值操作 */
 int dynamicArraySearch(dynamicArray * pArray, int pos, ELEMENTYP *val);

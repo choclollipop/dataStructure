@@ -19,14 +19,14 @@ do{                         \
     if(!ptr){               \
         return NULL_PTR;    \
     }                       \
-}while(0);
+}while(0)
 
 #define CHECK_MALLOC(ptr)        \
 do{                              \
     if(!ptr){                    \
         return MALLOC_ERROR;     \
     }                            \
-}while(0);
+}while(0)
 
 
 /* 前置声明 */
@@ -170,16 +170,23 @@ int dynamicArrayDeleteAppointPosData(dynamicArray * pArray, int pos)
 }
 
 /* 删除指定元素 */
-int dynamicArrayDeleteAppointVal(dynamicArray * pArray, int val)
+int dynamicArrayDeleteAppointVal(dynamicArray * pArray, ELEMENTYP val, int (* compareFunc)(ELEMENTYP val1, ELEMENTYP val2))
 {
     CHECK_PTR(pArray);
 
     for(int idx = pArray->len - 1; idx >= 0; idx--)
     {
-        if(*(int *)pArray->data[idx] == val)
+        int tmp = compareFunc(pArray->data[idx], val);
+        if(1 == tmp)
         {
             dynamicArrayDeleteAppointPosData(pArray, idx);
         }
+#if 0
+        if(pArray->data[idx] == val)
+        {
+            dynamicArrayDeleteAppointPosData(pArray, idx);
+        }
+#endif
     }
 
     return ON_SUCCESS;
