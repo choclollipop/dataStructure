@@ -206,7 +206,18 @@ int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val)
     return ON_SUCCESS;
 }
 
+/* 获取链表大小 */
+int linkListGetLen(linkList * pList, int *len)
+{
+    CHECK_PTR(pList);
 
+    if(len)
+    {
+        *len = pList->len;
+    }
+
+    return pList->len;
+}
 
 
 

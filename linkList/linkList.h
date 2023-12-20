@@ -42,7 +42,7 @@ int linkListDeleteAppointPosVal(linkList * pList, int pos);
 int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val);
 
 /* 获取链表大小 */
-int linkListGetLen();
+int linkListGetLen(linkList * pList, int *len);
 
 /* 查询链表指定位置的元素 */
 int linkListGetVal();

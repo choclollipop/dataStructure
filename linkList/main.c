@@ -1,7 +1,7 @@
 #include "linkList.h"
 #include <stdio.h>
 
-#define BUFFER_SIZE 3
+#define BUFFER_SIZE 5
 
 int myPrint(void * argv)
 {
@@ -12,7 +12,7 @@ int myPrint(void * argv)
 int main()
 {
     linkList * list = NULL;
-    int buffer[BUFFER_SIZE] = {0, 1, 2};
+    int buffer[BUFFER_SIZE] = {0, 1, 2, 3, 4};
     int val = 5;
 
     /* 测试初始化函数 */
@@ -42,6 +42,12 @@ int main()
 
     /* 测试修改指定位置的元素值 */
     linkListModifyAppointPosVal(list, 2, (void *)&val);
+
+    /* 测试获取链表大小 */
+    int len = 0;
+    linkListGetLen(list, &len);
+    printf("len : %d\n", len);
+    printf("list.len : %d\n", list->len);
 
     /* 测试链表遍历 */
     linkListSearch(list, myPrint);
