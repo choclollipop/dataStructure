@@ -49,6 +49,11 @@ int main()
     printf("len : %d\n", len);
     printf("list.len : %d\n", list->len);
 
+    /* 测试获取指定位置的数据 */
+    int * val1 = NULL;
+    linkListGetVal(list, 2, (void *)&val1);
+    printf("val1 : %d\n", *val1);
+
     /* 测试链表遍历 */
     linkListSearch(list, myPrint);
 

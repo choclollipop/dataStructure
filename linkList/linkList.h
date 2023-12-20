@@ -45,7 +45,7 @@ int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val);
 int linkListGetLen(linkList * pList, int *len);
 
 /* 查询链表指定位置的元素 */
-int linkListGetVal();
+int linkListGetVal(linkList * pList, int pos, ELEMENTTYPE *val);
 
 /* 遍历链表 */
 int linkListSearch(linkList * pList, int(* printFunc)(ELEMENTTYPE));

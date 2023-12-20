@@ -219,6 +219,39 @@ int linkListGetLen(linkList * pList, int *len)
     return pList->len;
 }
 
+/* 查询链表指定位置的元素 */
+int linkListGetVal(linkList * pList, int pos, ELEMENTTYPE *val)
+{
+    CHECK_PTR(pList);
+
+    if(pos < 0 || pos > pList->len)
+    {
+        return ILLEGAL_DATA;
+    }
+
+    /* 从头结点开始遍历 */
+    Node * travelNode = pList->head;
+
+    /* 查询的是表尾数据 */
+    if(pos == pList->len)
+    {
+        travelNode = pList->tail;
+    }
+    else
+    {
+        while(pos--)
+        {
+            travelNode = travelNode->next;
+        }
+    }
+
+    /* 找到指定位置，传出此位置的值 */
+    *val = travelNode->data;
+    
+    return ON_SUCCESS;
+}
+
+
 
 
 /* 遍历链表 */
