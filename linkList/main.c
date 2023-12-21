@@ -9,6 +9,20 @@ int myPrint(void * argv)
     printf("list.data : %d\n", *tmp);
 }
 
+int compare(void * val1, void * val2)
+{
+    int * tmp1 = (int *)val1;
+    int * tmp2 = (int *)val2;
+    int ret = 0;
+
+    if(*tmp1 == *tmp2)
+    {
+        return ret = 1;
+    }
+
+    return ret = 0;
+}
+
 int main()
 {
     linkList * list = NULL;
@@ -53,6 +67,13 @@ int main()
     int * val1 = NULL;
     linkListGetVal(list, 2, (void *)&val1);
     printf("val1 : %d\n", *val1);
+
+    /* 测试修改指定位置的元素值 */
+    val = 5;
+    linkListModifyAppointPosVal(list, 3, (void *)&val);
+
+    /* 测试删除指定元素 */
+    linkListDeleteAppointVal(list, (void *)&val, compare);
 
     /* 测试链表遍历 */
     linkListSearch(list, myPrint);

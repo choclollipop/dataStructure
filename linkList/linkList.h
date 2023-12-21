@@ -38,8 +38,8 @@ int linkListDelTail(linkList * pList);
 /* 删除指定位置元素 */
 int linkListDeleteAppointPosVal(linkList * pList, int pos);
 
-/* 删除指定元素*/
-int linkListDelAppointVal();    //todo......
+/* 删除链表指定元素 */
+int linkListDeleteAppointVal(linkList * pList, ELEMENTTYPE val, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2));
 
 /* 修改链表指定位置数据 */
 int linkListModifyAppointPosVal(linkList * pList, int pos, ELEMENTTYPE val);

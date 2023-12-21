@@ -8,6 +8,7 @@ enum STATUS_CODE
     NULL_PTR = -5,
     MALLOC_ERROR,
     ILLEGAL_DATA,
+    NOT_FIND,
 };
 
 #define CHECK_PTR(ptr)       \
@@ -24,6 +25,8 @@ do{                             \
     }                           \
 }while(0)
 
+
+static int linkListGetAppointValPos(linkList * pList, ELEMENTTYPE val, int * pPos, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2));
 
 /* 链表初始化 */
 int linkListInit(linkList ** pList)
@@ -169,6 +172,47 @@ int linkListDeleteAppointPosVal(linkList * pList, int pos)
 
     /* 更新链表信息 */
     pList->len--;
+
+    return ON_SUCCESS;
+}
+
+/* 链表获取指定元素的位置 */
+static int linkListGetAppointValPos(linkList * pList, ELEMENTTYPE val, int * pPos, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
+{
+    /* 从头结点开始遍历 */
+    Node * travelNode = pList->head->next;
+
+    int pos = 0;
+    int ret = 0;
+
+    while(travelNode)
+    {
+        ret = compareFunc(travelNode->data, val);
+        if(ret == 1)
+        {
+            pos++;
+            *pPos = pos;
+            return pos;
+        }
+        travelNode = travelNode->next;
+        pos++;
+    }
+
+    *pPos = NOT_FIND;
+
+    return NOT_FIND;
+}
+
+/* 删除链表指定元素 */
+int linkListDeleteAppointVal(linkList * pList, ELEMENTTYPE val, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
+{
+    CHECK_PTR(pList);
+    int pos = 0;
+    
+    while(pos != NOT_FIND)
+    {
+        linkListDeleteAppointPosVal(pList, linkListGetAppointValPos(pList, val, &pos, compareFunc));
+    }
 
     return ON_SUCCESS;
 }
