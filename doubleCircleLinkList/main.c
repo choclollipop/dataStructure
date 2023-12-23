@@ -70,6 +70,9 @@ int main()
     int val = 3;
     DoubleCircleLinkListDelAppointVal(circleList, (void *)&val, compare);
 
+    /* 测试销毁链表 : 销毁后再遍历应该段错误 */
+    DoubleCircleLinkListDestory(circleList);
+
     /* 测试遍历函数 */
     DoubleCircleLinkListForeach(circleList, printInt);
 
