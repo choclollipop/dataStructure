@@ -13,7 +13,7 @@ enum STATUS_CODE
     NOT_FIND,
 };
 
-static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pList, ELEMENTTYPE val, int *pPos);
+static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pList, ELEMENTTYPE val, int *pPos, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2));
 static DoubleLinkNode *createDoubleLinkNode(ELEMENTTYPE val);
 
 /* 链表初始化 */
@@ -191,7 +191,7 @@ int DoubleCircleLinkListAppointPosDel(DoubleCircleLinkList *pList, int pos)
     {
         flag = 1;
         travel = pList->tail->prev;
-        needDelNode = travel->next;
+        needDelNode = pList->tail;
         pList->head->next->prev = travel;
     }
     else if (pos == 1)
@@ -233,16 +233,19 @@ int DoubleCircleLinkListAppointPosDel(DoubleCircleLinkList *pList, int pos)
 }
 
 /* 根据指定元素得到元素在链表中所在位置 */
-static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pList, ELEMENTTYPE val, int *pPos)
+static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pList, ELEMENTTYPE val, int *pPos, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
 {
-    /* 从头结点开始遍历 */
-    DoubleLinkNode *travelNode = pList->head;
+    /* 第一个数据开始遍历 */
+    DoubleLinkNode * travelNode = pList->head->next;
 
     int pos = 0;
+    int ret = 0;
+    int count = 0;
 
-    while (travelNode->next)
+    while(count != pList->len)
     {
-        if (travelNode->next->data == val)
+        ret = compareFunc(travelNode->data, val);
+        if(ret == 1)
         {
             pos++;
             *pPos = pos;
@@ -250,6 +253,7 @@ static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pLis
         }
         travelNode = travelNode->next;
         pos++;
+        count++;
     }
 
     *pPos = NOT_FIND;
@@ -258,14 +262,18 @@ static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pLis
 }
 
 /* 链表删除指定元素 */
-int DoubleCircleLinkListDelAppointVal(DoubleCircleLinkList *pList, ELEMENTTYPE val)
+int DoubleCircleLinkListDelAppointVal(DoubleCircleLinkList *pList, ELEMENTTYPE val, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
 {
-    int pos = 0;
-    int size = 0;
-
-    while (pos != NOT_FIND)
+    if (!pList)
     {
-        DoubleCircleLinkListAppointPosDel(pList, DoubleCircleLinkListAccordAppointValGetPos(pList, val, &pos));
+        return NULL_PTR;
+    }
+
+    int pos = 0;
+    
+    while(pos != NOT_FIND)
+    {
+        DoubleCircleLinkListAppointPosDel(pList, DoubleCircleLinkListAccordAppointValGetPos(pList, val, &pos, compareFunc));
     }
 
     return ON_SUCCESS;

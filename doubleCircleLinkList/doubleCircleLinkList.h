@@ -41,7 +41,7 @@ int DoubleCircleLinkListTailDel(DoubleCircleLinkList * pList);
 int DoubleCircleLinkListAppointPosDel(DoubleCircleLinkList * pList, int pos);
 
 /* 链表删除指定元素 */
-int DoubleCircleLinkListDelAppointVal(DoubleCircleLinkList * pList, ELEMENTTYPE val);
+int DoubleCircleLinkListDelAppointVal(DoubleCircleLinkList * pList, ELEMENTTYPE val, int(* compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2));
 
 /* 获取链表长度 */
 int DoubleCircleLinkListGetLen(DoubleCircleLinkList * pList, int * pSize);

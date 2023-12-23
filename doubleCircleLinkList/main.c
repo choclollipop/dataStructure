@@ -9,6 +9,21 @@ int printInt(void *argc)
     printf("circleList.data : %d\n", *tmp);
 }
 
+int compare(void * val1, void * val2)
+{
+    int ret = 0;
+    int * tmp1 = (int *)val1;
+    int * tmp2 = (int *)val2;
+
+    /* todo ...... */
+    if(*tmp1 == *tmp2)
+    {
+        return ret = 1;
+    }
+
+    return ret = 0;
+}
+
 int main()
 {
     DoubleCircleLinkList *circleList = NULL;
@@ -39,14 +54,21 @@ int main()
     DoubleCircleLinkListGetLen(circleList, &len);
     printf("len : %d\n", len);
 
+    /* 测试指定位置删除 */
     DoubleCircleLinkListAppointPosDel(circleList, 2);
 
+    /* 测试循环尾删 */
     for (int idx = 0; idx < 2; idx++)
     {
         DoubleCircleLinkListTailDel(circleList);
     }
 
+    /* 测试头删 */
     DoubleCircleLinkListHeadDel(circleList);
+
+    /* 测试删除指定元素 */
+    int val = 3;
+    DoubleCircleLinkListDelAppointVal(circleList, (void *)&val, compare);
 
     /* 测试遍历函数 */
     DoubleCircleLinkListForeach(circleList, printInt);
