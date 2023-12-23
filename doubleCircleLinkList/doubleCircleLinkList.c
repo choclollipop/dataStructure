@@ -198,7 +198,6 @@ int DoubleCircleLinkListAppointPosDel(DoubleCircleLinkList *pList, int pos)
     {
         travel = pList->head;
         needDelNode = travel->next;
-        pList->tail = needDelNode->next;
         needDelNode->next->prev = pList->tail;
     }
     else
@@ -240,9 +239,9 @@ static int DoubleCircleLinkListAccordAppointValGetPos(DoubleCircleLinkList *pLis
 
     int pos = 0;
     int ret = 0;
-    int count = 0;
+    int count = 1;
 
-    while(count != pList->len)
+    while(count <= pList->len)
     {
         ret = compareFunc(travelNode->data, val);
         if(ret == 1)
