@@ -30,10 +30,13 @@ enum STATUS_CODE
 };
 
 /* 前置声明 */
+/* 创建新节点 */
 static BSTreeNode * creatrNewNode(ELEMENTTYPE val, BSTreeNode * node);
+/* 前序遍历 */
+static int preOrderTravel(binarySearchTree * pBSTree, BSTreeNode * node);
 
 /* 二叉搜索树初始化 */
-int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
+int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2), int (*printFunc)(ELEMENTTYPE val))
 {
     binarySearchTree * tree = (binarySearchTree *)malloc(sizeof(binarySearchTree) * 1);
     /* 判空 */
@@ -41,19 +44,21 @@ int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENT
     /* 清零 */
     memset(tree, 0, sizeof(binarySearchTree) * 1);
 
-    /* 初始化 */
+    /* 初始化树 */
     tree->size = 0;
+    tree->compareFunc = compareFunc;
+    tree->printFunc = printFunc;
 
     tree->root = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
     /* 判空 */
     CHECK_MALLOC(tree->root);
     memset(tree->root, 0, sizeof(BSTreeNode) * 1);
 
+    /* 初始化根节点 */
     tree->root->data = 0;
     tree->root->lchild = NULL;
     tree->root->rchild = NULL;
     tree->root->parent = NULL;
-    tree->compareFunc = compareFunc;
 
     *pBSTree = tree;
 
@@ -135,4 +140,31 @@ int binarySearchTreeInsert(binarySearchTree * pBSTree, ELEMENTTYPE val)
     pBSTree->size++;
 
     return ON_SUCCESS;
+}
+
+/* 前序遍历 */
+static int preOrderTravel(binarySearchTree * pBSTree, BSTreeNode * node)
+{
+    if(node)
+    {
+        pBSTree->printFunc(node->data);
+        preOrderTravel(pBSTree, node->lchild);
+        preOrderTravel(pBSTree, node->rchild);
+    }
+
+    return ON_SUCCESS;
+}
+
+/* 二叉搜索树的前序遍历 */
+int binarySearchTreePreOrederTravel(binarySearchTree * pBSTree)
+{
+    CHECK_PTR(pBSTree);
+
+    return preOrderTravel(pBSTree, pBSTree->root);
+}
+
+/* 二叉搜索树的中序遍历 */
+int binarySearchTreeInOrderTravel(binarySearchTree * pBSTree)
+{
+    return 0;
 }

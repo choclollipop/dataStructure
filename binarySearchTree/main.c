@@ -15,6 +15,12 @@ int InOrderTravel(BSTreeNode * node)
     return 0;
 }
 
+int printFunc(void * val)
+{
+    int * tmp = (int *)val;
+    printf("data : %d\n", *tmp);
+}
+
 int compare(void * val1, void *val2)
 {
     int * tmp1 = (int *)val1;
@@ -39,7 +45,7 @@ int main()
     binarySearchTree * tree = NULL;
     int buffer[BUFFER_SIZE] = {6, 10, 5, 7, 9};
 
-    binarySearchTreeInit(&tree, compare);
+    binarySearchTreeInit(&tree, compare, printFunc);
 
     /* 测试二叉搜索树的插入操作 */
     for(int idx = 0; idx < BUFFER_SIZE; idx++)
@@ -47,7 +53,8 @@ int main()
         binarySearchTreeInsert(tree, (void *)&buffer[idx]);
     }
 
-    InOrderTravel(tree->root);
+    /* 测试二叉搜索的树前序遍历 */
+    binarySearchTreePreOrederTravel(tree);
 
     return 0;
 }
