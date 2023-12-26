@@ -29,6 +29,9 @@ enum STATUS_CODE
     NOT_FIND,
 };
 
+/* 前置声明 */
+static BSTreeNode * creatrNewNode(ELEMENTTYPE val, BSTreeNode * node);
+
 /* 二叉搜索树初始化 */
 int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
 {
@@ -55,6 +58,24 @@ int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENT
     *pBSTree = tree;
 
     return ON_SUCCESS;
+}
+
+/* 二叉搜索树创建新的结点 */
+static BSTreeNode * creatrNewNode(ELEMENTTYPE val, BSTreeNode * parentNode)
+{
+    BSTreeNode * newNode = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
+    if(!newNode)
+    {
+        return NULL;
+    }
+    memset(newNode, 0, sizeof(BSTreeNode) * 1);
+
+    newNode->data = val;
+    newNode->lchild = NULL;
+    newNode->rchild = NULL;
+    newNode->parent = parentNode;
+
+    return newNode;
 }
 
 /* 二叉搜索树插入 */
@@ -98,14 +119,8 @@ int binarySearchTreeInsert(binarySearchTree * pBSTree, ELEMENTTYPE val)
         }
     }
 
-    BSTreeNode * newNode = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
+    BSTreeNode * newNode = creatrNewNode(val, parentNode);
     CHECK_MALLOC(newNode);
-    memset(newNode, 0, sizeof(BSTreeNode) * 1);
-
-    newNode->data = val;
-    newNode->lchild = NULL;
-    newNode->rchild = NULL;
-    newNode->parent = parentNode;
 
     if(cmp < 0)
     {
