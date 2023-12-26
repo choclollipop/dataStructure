@@ -30,7 +30,7 @@ enum STATUS_CODE
 };
 
 /* 二叉搜索树初始化 */
-int binarySearchTreeInit(binarySearchTree ** pBSTree)
+int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2))
 {
     binarySearchTree * tree = (binarySearchTree *)malloc(sizeof(binarySearchTree) * 1);
     /* 判空 */
@@ -50,9 +50,74 @@ int binarySearchTreeInit(binarySearchTree ** pBSTree)
     tree->root->lchild = NULL;
     tree->root->rchild = NULL;
     tree->root->parent = NULL;
+    tree->compareFunc = compareFunc;
 
     *pBSTree = tree;
 
     return ON_SUCCESS;
 }
 
+/* 二叉搜索树插入 */
+int binarySearchTreeInsert(binarySearchTree * pBSTree, ELEMENTTYPE val)
+{
+    CHECK_PTR(pBSTree);
+
+    /* 从根结点开始遍历 */
+    BSTreeNode * travelNode = pBSTree->root;
+    /* 根节点为空插入根节点中 */
+    if(pBSTree->size == 0)
+    {
+        travelNode->data = val;
+        pBSTree->size++;
+
+        return ON_SUCCESS;
+    }
+
+    /* 比较插入的值与结点大小 */
+    int cmp = 0;
+
+    BSTreeNode * parentNode = NULL;
+    while(travelNode != NULL)
+    {
+        parentNode = travelNode;
+
+        cmp = pBSTree->compareFunc(val, travelNode->data);
+
+        if(cmp < 0)
+        {
+            travelNode = travelNode->lchild;
+        }
+        else if(cmp > 0)
+        {
+            travelNode = travelNode->rchild;
+        }
+        else
+        {
+            /* 相同时不做插入操作直接返回 */
+            return ON_SUCCESS;
+        }
+    }
+
+    BSTreeNode * newNode = (BSTreeNode *)malloc(sizeof(BSTreeNode) * 1);
+    CHECK_MALLOC(newNode);
+    memset(newNode, 0, sizeof(BSTreeNode) * 1);
+
+    newNode->data = val;
+    newNode->lchild = NULL;
+    newNode->rchild = NULL;
+    newNode->parent = parentNode;
+
+    if(cmp < 0)
+    {
+        parentNode->lchild = newNode;
+    }
+    else
+    {
+        parentNode->rchild = newNode;
+    }
+
+    /* 更新树的结点个数 */
+    pBSTree->size++;
+
+    return ON_SUCCESS;
+}

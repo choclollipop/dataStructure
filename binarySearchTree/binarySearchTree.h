@@ -15,10 +15,12 @@ typedef struct binarySearchTree
 {
     BSTreeNode * root;
     int size;
+
+    int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2);
 } binarySearchTree;
 
 /* 二叉搜索树初始化 */
-int binarySearchTreeInit(binarySearchTree ** pBSTree);
+int binarySearchTreeInit(binarySearchTree ** pBSTree, int (*compareFunc)(ELEMENTTYPE val1, ELEMENTTYPE val2));
 
 /* 二叉搜索树插入 */
 int binarySearchTreeInsert(binarySearchTree * pBSTree, ELEMENTTYPE val);
