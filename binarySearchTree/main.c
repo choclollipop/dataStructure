@@ -55,6 +55,14 @@ int main()
 
     /* 测试二叉搜索的树前序遍历 */
     binarySearchTreePreOrederTravel(tree);
+    printf("\n");
+
+    /* 测试二叉搜索树的中序遍历 */
+    binarySearchTreeInOrderTravel(tree);
+    printf("\n");
+
+    /* 测试二叉搜索树的后序遍历 */
+    binarySearchTreePostOrderTravel(tree);
 
     return 0;
 }

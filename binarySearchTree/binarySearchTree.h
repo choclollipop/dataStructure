@@ -33,4 +33,10 @@ int binarySearchTreePreOrederTravel(binarySearchTree * pBSTree);
 /* 二叉搜索树的中序遍历 */
 int binarySearchTreeInOrderTravel(binarySearchTree * pBSTree);
 
+/* 二叉搜索树的后序遍历 */
+int binarySearchTreePostOrderTravel(binarySearchTree * pBSTree);
+
+/* 二叉搜索树的层序遍历 */
+int binarySearchTreeLevelTravel(binarySearchTree * pBSTree);
+
 #endif //__BINARYSEARCH_TREE_H_
