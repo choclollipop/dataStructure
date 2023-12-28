@@ -53,6 +53,9 @@ int main()
         binarySearchTreeInsert(tree, (void *)&buffer[idx]);
     }
 
+    /* 测试删除函数 */
+    binarySearchTreeDeleteAppointVal(tree, (void *)&buffer[4]);
+
     /* 测试二叉搜索的树前序遍历 */
     binarySearchTreePreOrederTravel(tree);
     printf("\n");

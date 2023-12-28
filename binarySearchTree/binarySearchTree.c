@@ -39,6 +39,18 @@ static int preOrderTravel(binarySearchTree * pBSTree, BSTreeNode * node);
 static int inOrderTravel(binarySearchTree * pBSTree, BSTreeNode * node);
 /* 后序遍历 */
 static int postOrderTravel(binarySearchTree * pBSTree, BSTreeNode * node);
+/* 获取指定值的结点位置 */
+static BSTreeNode * baseAppointValGetPos(binarySearchTree * pBSTree, ELEMENTTYPE val);
+/* 删除指定结点 */
+static int binarySearchTreeDelete(binarySearchTree * pBSTree, BSTreeNode * node);
+/* 度为2 */
+static int binarySearchTreeHasTwoChilds(BSTreeNode * node);
+/* 度为1 */
+static int binarySearchTreeHasOneChild(BSTreeNode * node);
+/* 度为0 */
+static int binarySearchTreeIsLeave(BSTreeNode * node);
+/* 查找指定结点的中序前驱节点 */
+static BSTreeNode * getPreNode(BSTreeNode * node);
 
 
 
@@ -306,4 +318,154 @@ int binarySearchTreeGetHeight(binarySearchTree * pBSTree, int * pHeight)
     *pHeight = height;
 
     return ON_SUCCESS;
+}
+
+/* 获取指定值的结点位置 */
+static BSTreeNode * baseAppointValGetPos(binarySearchTree * pBSTree, ELEMENTTYPE val)
+{
+    /* 从根节点开始遍历 */
+    BSTreeNode * travelNode = pBSTree->root;
+    
+    int cmp = 0;
+    while (travelNode)
+    {
+        cmp = pBSTree->compareFunc(val, travelNode->data);
+        /* cmp小于0表示val小于当前结点，应该向左子树继续寻找 */
+        if(cmp < 0)
+        {
+            travelNode = travelNode->lchild;
+        }
+        else if(cmp > 0)
+        {
+            travelNode = travelNode->rchild;
+        }
+        else
+        {
+            return travelNode;
+        }
+    }
+    
+    return NULL;
+}
+
+/* 度为2 */
+static int binarySearchTreeHasTwoChilds(BSTreeNode * node)
+{
+    CHECK_PTR(node);
+
+    return node->rchild != NULL && node->lchild != NULL;
+}
+
+/* 度为1 */
+static int binarySearchTreeHasOneChild(BSTreeNode * node)
+{
+    CHECK_PTR(node);
+
+    return (node->rchild != NULL && node->lchild == NULL) || (node->rchild == NULL && node->lchild != NULL);
+}
+
+/* 度为0 */
+static int binarySearchTreeIsLeave(BSTreeNode * node)
+{
+    CHECK_PTR(node);
+
+    return node->rchild == NULL && node->lchild == NULL;
+}
+
+/* 查找指定结点的中序前驱节点 */
+static BSTreeNode * getPreNode(BSTreeNode * node)
+{
+    if(!node)
+    {
+        return NULL;
+    }
+
+    BSTreeNode * travelNode = node->lchild;
+
+    /* 有左子树 */
+    if(travelNode)
+    {
+        while(travelNode->rchild)
+        {
+            travelNode = travelNode->rchild;
+        }
+        return travelNode;
+    }
+    else
+    {
+        travelNode = node->parent;
+        while(travelNode->parent)
+        {
+            travelNode = travelNode->parent;
+            if(travelNode == travelNode->parent->rchild)
+            {
+                return travelNode->parent;
+            }
+        }
+    }
+
+    return NULL;   
+}
+
+/* 删除指定结点 */
+static int binarySearchTreeDelete(binarySearchTree * pBSTree, BSTreeNode * node)
+{
+    CHECK_PTR(pBSTree);
+    CHECK_PTR(node);
+
+    BSTreeNode * delNode = node;
+    BSTreeNode * preNode = NULL;
+
+    if(binarySearchTreeHasTwoChilds(delNode))
+    {
+        preNode = getPreNode(delNode);
+        delNode->data = preNode->data;
+        delNode = preNode;
+    }
+
+    BSTreeNode * child = delNode->lchild != NULL ? delNode->lchild : delNode->rchild;
+    /* child非空则表示删除结点度为1 */
+    if(child)
+    {
+        child->parent = delNode->parent;
+        if(delNode == delNode->parent->lchild)
+        {
+            delNode->parent->lchild = child;
+        }
+        else if(delNode == delNode->parent->rchild)
+        {
+            delNode->parent->rchild = child;
+        }
+        if(delNode->parent == NULL)
+        {
+            pBSTree->root = child;
+        }
+    }
+    else
+    {
+        if(delNode == delNode->parent->lchild)
+        {
+            delNode->parent->lchild = NULL;
+        }
+        else if(delNode == delNode->parent->rchild)
+        {
+            delNode->parent->rchild = NULL;
+        }
+    }
+
+    if(delNode)
+    {
+        free(delNode);
+        delNode = NULL;
+    }
+
+    return ON_SUCCESS;
+}
+
+/* 二叉搜索树删除指定的值 */
+int binarySearchTreeDeleteAppointVal(binarySearchTree * pBSTree, ELEMENTTYPE val)
+{
+    CHECK_PTR(pBSTree);
+
+    return binarySearchTreeDelete(pBSTree, baseAppointValGetPos(pBSTree, val));
 }
