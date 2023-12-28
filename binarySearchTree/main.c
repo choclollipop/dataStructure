@@ -54,7 +54,7 @@ int main()
     }
 
     /* 测试删除函数 */
-    binarySearchTreeDeleteAppointVal(tree, (void *)&buffer[4]);
+    binarySearchTreeDeleteAppointVal(tree, (void *)&buffer[3]);
 
     /* 测试二叉搜索的树前序遍历 */
     binarySearchTreePreOrederTravel(tree);

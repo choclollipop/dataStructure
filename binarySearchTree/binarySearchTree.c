@@ -51,6 +51,8 @@ static int binarySearchTreeHasOneChild(BSTreeNode * node);
 static int binarySearchTreeIsLeave(BSTreeNode * node);
 /* 查找指定结点的中序前驱节点 */
 static BSTreeNode * getPreNode(BSTreeNode * node);
+/* 查找指定结点的中序后继结点 */
+static BSTreeNode * getPostNode(BSTreeNode * node);
 
 
 
@@ -396,15 +398,51 @@ static BSTreeNode * getPreNode(BSTreeNode * node)
         travelNode = node->parent;
         while(travelNode->parent)
         {
-            travelNode = travelNode->parent;
             if(travelNode == travelNode->parent->rchild)
             {
                 return travelNode->parent;
             }
+            travelNode = travelNode->parent;
         }
     }
 
     return NULL;   
+}
+
+/* 查找指定结点的中序后继结点 */
+static BSTreeNode * getPostNode(BSTreeNode * node)
+{
+    if(!node)
+    {
+        return NULL;
+    }
+
+    BSTreeNode * travelNode = node->rchild;
+
+    /* 有右子树 */
+    if(travelNode)
+    {
+        while (travelNode->lchild)
+        {
+            travelNode = travelNode->lchild;
+        }
+        return travelNode;
+    }
+    else
+    {
+        /* 没有右子树 */
+        travelNode = travelNode->parent;
+        while(travelNode->parent)
+        {
+            if(travelNode == travelNode->parent->lchild)
+            {
+                return travelNode->parent;
+            }
+            travelNode = travelNode->parent;
+        }
+    }
+
+    return NULL;
 }
 
 /* 删除指定结点 */
