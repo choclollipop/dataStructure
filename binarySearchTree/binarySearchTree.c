@@ -1,4 +1,5 @@
 #include "binarySearchTree.h"
+#include "doubleLinkListQueue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -214,6 +215,44 @@ int binarySearchTreePostOrderTravel(binarySearchTree * pBSTree)
 /* 二叉搜索树的层序遍历 */
 int binarySearchTreeLevelTravel(binarySearchTree * pBSTree)
 {
+    if(!pBSTree)
+    {
+        return NULL_PTR;
+    }
+
+    doubleLinkListQueue * queue = NULL;
+    BSTreeNode * val = NULL;
+    /* 初始化队列 */
+    doubleLinkListQueueInit(&queue);
+
+    /* 头结点入队 */
+    doubleLinkListQueuePush(queue, pBSTree->root);
+
+    /* 循环取值 */
+    while(!doubleLinkListQueueIsEmpty(queue))
+    {
+        /* 取队头元素 */
+        doubleLinkListQueueTop(queue, (void **)&val);
+        pBSTree->printFunc(val->data);
+        /* 出队 */
+        doubleLinkListQueuePop(queue);
+
+        if(val->lchild)
+        {
+            doubleLinkListQueuePush(queue, (void *)val->lchild);
+        }
+        if(val->rchild)
+        {
+            doubleLinkListQueuePush(queue, (void *)val->rchild);
+        }
+    }
+
+    /* 释放队列 */
+    if(queue)
+    {
+        free(queue);
+        queue = NULL;
+    }
 
     return ON_SUCCESS;
 }

@@ -63,6 +63,10 @@ int main()
 
     /* 测试二叉搜索树的后序遍历 */
     binarySearchTreePostOrderTravel(tree);
+    printf("\n");
+
+    /* 测试二叉搜索树的层序遍历 */
+    binarySearchTreeLevelTravel(tree);
 
     return 0;
 }
