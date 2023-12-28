@@ -68,5 +68,15 @@ int main()
     /* 测试二叉搜索树的层序遍历 */
     binarySearchTreeLevelTravel(tree);
 
+    /* 测试获取结点个数 */
+    int size = 0;
+    binarySearchTreeNodeSize(tree, &size);
+    printf("size : %d\n", size);
+
+    /* 测试获取二叉搜索树高度函数 */
+    int height = 0;
+    binarySearchTreeGetHeight(tree, &height);
+    printf("height : %d\n", height);
+
     return 0;
 }

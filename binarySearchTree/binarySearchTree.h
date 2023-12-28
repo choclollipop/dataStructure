@@ -39,4 +39,10 @@ int binarySearchTreePostOrderTravel(binarySearchTree * pBSTree);
 /* 二叉搜索树的层序遍历 */
 int binarySearchTreeLevelTravel(binarySearchTree * pBSTree);
 
+/* 获取二叉搜索树的结点个数 */
+int binarySearchTreeNodeSize(binarySearchTree * pBSTree, int * pSize);
+
+/* 获取二叉搜索树的高度 */
+int binarySearchTreeGetHeight(binarySearchTree * pBSTree, int * pHeight);
+
 #endif //__BINARYSEARCH_TREE_H_

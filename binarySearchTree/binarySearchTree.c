@@ -215,10 +215,7 @@ int binarySearchTreePostOrderTravel(binarySearchTree * pBSTree)
 /* 二叉搜索树的层序遍历 */
 int binarySearchTreeLevelTravel(binarySearchTree * pBSTree)
 {
-    if(!pBSTree)
-    {
-        return NULL_PTR;
-    }
+    CHECK_PTR(pBSTree);
 
     doubleLinkListQueue * queue = NULL;
     BSTreeNode * val = NULL;
@@ -253,6 +250,60 @@ int binarySearchTreeLevelTravel(binarySearchTree * pBSTree)
         free(queue);
         queue = NULL;
     }
+
+    return ON_SUCCESS;
+}
+
+/* 获取二叉搜索树的结点个数 */
+int binarySearchTreeNodeSize(binarySearchTree * pBSTree, int * pSize)
+{
+    CHECK_PTR(pBSTree);
+
+    *pSize = pBSTree->size;
+
+    return pBSTree->size;
+}
+
+/* 获取二叉搜索树的高度 */
+int binarySearchTreeGetHeight(binarySearchTree * pBSTree, int * pHeight)
+{
+    CHECK_PTR(pBSTree);
+
+    doubleLinkListQueue * queue = NULL;
+    BSTreeNode * val = NULL;
+
+    /* 队列初始化 */
+    doubleLinkListQueueInit(&queue);
+
+    /* 根节点入队 */
+    doubleLinkListQueuePush(queue, pBSTree->root);
+    /* 记录每层的结点个数 */
+    int levelSize = 1;
+    /* 记录高度 */
+    int height = 0;
+
+    while(!doubleLinkListQueueIsEmpty(queue))
+    {
+        doubleLinkListQueueTop(queue, (void **)&val);
+        doubleLinkListQueuePop(queue);
+        levelSize--;
+
+        if(val->lchild)
+        {
+            doubleLinkListQueuePush(queue, (void *)val->lchild);
+        }
+        if(val->rchild)
+        {
+            doubleLinkListQueuePush(queue, (void *)val->rchild);
+        }
+        if(!levelSize)
+        {
+            height++;
+            doubleLinkListQueueGetSize(queue, &levelSize);
+        }
+    }
+
+    *pHeight = height;
 
     return ON_SUCCESS;
 }
