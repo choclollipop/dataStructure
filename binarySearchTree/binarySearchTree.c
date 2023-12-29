@@ -250,20 +250,16 @@ int binarySearchTreeLevelTravel(binarySearchTree * pBSTree)
 
         if(val->lchild)
         {
-            doubleLinkListQueuePush(queue, (void *)val->lchild);
+            doubleLinkListQueuePush(queue, (void *)&val->lchild);
         }
         if(val->rchild)
         {
-            doubleLinkListQueuePush(queue, (void *)val->rchild);
+            doubleLinkListQueuePush(queue, (void *)&val->rchild);
         }
     }
 
     /* 释放队列 */
-    if(queue)
-    {
-        free(queue);
-        queue = NULL;
-    }
+    doubleLinkListQueueDestroy(queue);
 
     return ON_SUCCESS;
 }
@@ -304,11 +300,11 @@ int binarySearchTreeGetHeight(binarySearchTree * pBSTree, int * pHeight)
 
         if(val->lchild)
         {
-            doubleLinkListQueuePush(queue, (void *)val->lchild);
+            doubleLinkListQueuePush(queue, (void *)&val->lchild);
         }
         if(val->rchild)
         {
-            doubleLinkListQueuePush(queue, (void *)val->rchild);
+            doubleLinkListQueuePush(queue, (void *)&val->rchild);
         }
         if(!levelSize)
         {
@@ -318,6 +314,9 @@ int binarySearchTreeGetHeight(binarySearchTree * pBSTree, int * pHeight)
     }
 
     *pHeight = height;
+
+    /* 销毁队列 */
+    doubleLinkListQueueDestroy(queue);
 
     return ON_SUCCESS;
 }
@@ -506,4 +505,52 @@ int binarySearchTreeDeleteAppointVal(binarySearchTree * pBSTree, ELEMENTTYPE val
     CHECK_PTR(pBSTree);
 
     return binarySearchTreeDelete(pBSTree, baseAppointValGetPos(pBSTree, val));
+}
+
+/* 二叉搜索树的销毁 */
+int binarySearchTreeDestroy(binarySearchTree * pBSTree)
+{
+    CHECK_PTR(pBSTree);
+
+    /* 使用层序遍历删除所有结点 */
+    doubleLinkListQueue * queue = NULL;
+    BSTreeNode * valNode = NULL;
+
+    /* 队列初始化 */
+    doubleLinkListQueueInit(&queue);
+
+    /* 根节点入队 */
+    doubleLinkListQueuePush(queue, (void *)pBSTree->root);
+    /* 循环删除 */
+    while (!doubleLinkListQueueIsEmpty(queue))
+    {
+        doubleLinkListQueueTop(queue, (void **)&valNode);
+        doubleLinkListQueuePop(queue);
+
+        if(valNode->lchild)
+        {
+            doubleLinkListQueuePush(queue, (void **)&valNode->lchild);
+        }
+        if(valNode->rchild)
+        {
+            doubleLinkListQueuePush(queue, (void **)&valNode->rchild);
+        }
+
+        if(valNode)
+        {
+            free(valNode);
+            valNode = NULL;
+        }
+    }
+
+    /* 销毁队列 */
+    doubleLinkListQueueDestroy(queue);
+
+    if(pBSTree)
+    {
+        free(pBSTree);
+        pBSTree->root = NULL;
+    }
+
+    return ON_SUCCESS;  
 }

@@ -76,6 +76,9 @@ int main()
     binarySearchTreeNodeSize(tree, &size);
     printf("size : %d\n", size);
 
+    /* 测试销毁函数 */
+    binarySearchTreeDestroy(tree);
+
     /* 测试获取二叉搜索树高度函数 */
     int height = 0;
     binarySearchTreeGetHeight(tree, &height);
