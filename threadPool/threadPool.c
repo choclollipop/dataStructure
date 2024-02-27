@@ -107,7 +107,7 @@ static void * managerHander(void * arg)
     int flag = 0;
     while (pool->shoutdown == 0)
     {
-        sleep(1);
+        sleep(WAIT_TIME);
 
         pthread_mutex_lock(&pool->mutex_pool);
         int taskNum = pool->queue->queueSize;
